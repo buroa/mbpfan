@@ -1,6 +1,4 @@
-FROM debian:bookworm-slim as base
-
-FROM base as build
+FROM debian:latest as build
 
 RUN apt update && apt install build-essential -y
 
@@ -10,7 +8,7 @@ COPY . .
 
 RUN make install
 
-FROM base as app
+FROM gcr.io/distroless/base-debian12
 
 COPY --from=build /usr/sbin/mbpfan /usr/sbin/mbpfan
 
